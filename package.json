@@ -10,6 +10,7 @@
     "@reduxjs/toolkit": "^1.6.2",
     "@types/ramda": "^0.27.45",
     "hotkeys-js": "^3.8.7",
+    "immer": "^9.0.6",
     "jotai": "^1.4.0",
     "optics-ts": "^2.2.0",
     "pixi.js": "^6.1.3",

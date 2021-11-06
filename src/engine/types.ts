@@ -48,6 +48,8 @@ export interface GlobalState<State> {
   viewportWidth: number
   state: State
   lastFrameTimestamp: number
+  frameRate: number
+  allEntities: Entity<any>[]
 }
 
 export type System<
@@ -63,5 +65,5 @@ export type System<
     entities?: Entity<any>[]
     component?: React.ReactNode
     state?: State
-  }
+  } | Entity<any>[]
 ]

@@ -1,15 +1,16 @@
 import React from 'react'
 import { Entity, SystemQuery, System, GlobalState } from './types'
 
-export default function applySystems(
+export default function applySystems<State>(
   entities: Entity<any>[],
   systems: System<any>[],
-  global: GlobalState<any>
+  global: GlobalState<State>
 ): {
   entities: Entity<any>[]
   components: React.ReactNode[]
-  state: any
+  state: State
   lastFrameTimestamp: number
+  frameRate: number
 } {
   if (systems.length === 0) {
     return {
@@ -17,22 +18,33 @@ export default function applySystems(
       components: [],
       state: global.state,
       lastFrameTimestamp: new Date().getTime(),
+      frameRate: 1000 / (new Date().getTime() - global.lastFrameTimestamp),
     }
   } else {
     const [notApplicable, applicable] = splitEntitiesByQuery(
       entities,
       systems[0][1]
     )
-    const {
-      entities: newEntities,
-      component,
-      state: newState,
-    } = systems[0][2](applicable, global)
-    const restSystems = applySystems(
-      newEntities ? [...notApplicable, ...newEntities] : entities,
-      systems.slice(1),
-      { ...global, state: newState || global.state }
-    )
+    const systemOutput = systems[0][2](applicable, global)
+
+    const newState = Array.isArray(systemOutput)
+      ? undefined
+      : systemOutput.state
+    const component = Array.isArray(systemOutput)
+      ? undefined
+      : systemOutput.component
+    const newEntities = Array.isArray(systemOutput)
+      ? systemOutput
+      : systemOutput.entities
+
+    const updatedEntities = newEntities
+      ? [...notApplicable, ...newEntities]
+      : entities
+    const restSystems = applySystems(updatedEntities, systems.slice(1), {
+      ...global,
+      state: newState || global.state,
+      allEntities: updatedEntities,
+    })
     return {
       entities: restSystems.entities,
       components: component
@@ -40,6 +52,7 @@ export default function applySystems(
         : restSystems.components,
       state: restSystems.state,
       lastFrameTimestamp: restSystems.lastFrameTimestamp,
+      frameRate: restSystems.frameRate,
     }
   }
 }
