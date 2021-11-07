@@ -1,9 +1,11 @@
 import * as React from 'react'
 import useDimensions from 'react-cool-dimensions'
-import { Entity, System, Event } from './types'
+import { Entity, System, Event, DebugComponentProps } from './types'
 import useInterval from './use-interval'
-import applySystems, { entityPassesQuery } from './apply-systems'
+import applySystems from './apply-systems'
 import Viewport from './Viewport'
+import FrameRateControls from './FrameRateControls'
+import DefaultDebugView from './DefaultDebugView'
 
 export default function GameEngine({
   entities,
@@ -11,8 +13,10 @@ export default function GameEngine({
   viewportHeight,
   viewportWidth,
   debug = false,
+  DebugComponent = DefaultDebugView,
   initialState = {},
   frameRate = 30,
+  showFrameRateControls = false,
 }: {
   entities: Entity<any>[]
   systems: System<any>[]
@@ -21,6 +25,8 @@ export default function GameEngine({
   debug?: boolean
   initialState?: any
   frameRate?: number
+  showFrameRateControls?: boolean
+  DebugComponent?: (p: DebugComponentProps) => JSX.Element
 }) {
   const [currentFrameRate, setCurrentFrameRate] = React.useState(frameRate)
   const [currentData, setData] = React.useState({
@@ -46,7 +52,8 @@ export default function GameEngine({
         input: eventsRef.current,
         state: currentData.state,
         lastFrameTimestamp: currentData.lastFrameTimestamp,
-        frameRate: 1000 / ((new Date().getTime()) - currentData.lastFrameTimestamp),
+        frameRate:
+          1000 / (new Date().getTime() - currentData.lastFrameTimestamp),
         allEntities: currentData.entities,
       })
     )
@@ -70,47 +77,23 @@ export default function GameEngine({
   } else {
     return (
       <div>
-        <div>
-          <button onClick={() => setPaused((p) => !p)}>
-            {paused ? 'Unpause' : 'Pause'}
-          </button>
-          <button onClick={() => step()}>Step</button>
-          <span style={{ marginLeft: 20 }}>
-            Framerate:{' '}
-            <input
-              type='range'
-              step='5'
-              value={currentFrameRate}
-              min={5}
-              max={60}
-              onChange={(e) => setCurrentFrameRate(Number(e.target.value))}
-            />
-            {currentFrameRate}
-          </span>
-        </div>
-        <h1>Viewport</h1>
+        {showFrameRateControls && (
+          <FrameRateControls
+            paused={paused}
+            setPaused={setPaused}
+            currentFrameRate={currentFrameRate}
+            setCurrentFrameRate={setCurrentFrameRate}
+            step={step}
+          />
+        )}
         {ViewportElement}
-        <h1>Systems</h1>
-        {systems.map((system, i) => (
-          <div key={i}>
-            {JSON.stringify(system[0])}: {JSON.stringify(system[1])}
-          </div>
-        ))}
-        <h1>State</h1>
-        {JSON.stringify(currentData.state)}
-        <h1>Entities</h1>
-        {currentData.entities.map((entity, i) => (
-          <div key={i}>
-            {i}: {JSON.stringify(entity)}, applicableSystems:{' '}
-            {JSON.stringify(
-              systems
-                .map((s) =>
-                  entityPassesQuery(entity, s[1]) ? s[0] : undefined
-                )
-                .filter((s) => s !== undefined)
-            )}
-          </div>
-        ))}
+        <DebugComponent
+          systems={systems}
+          entities={currentData.entities}
+          setEntities={(e) => setData((d) => ({ ...d, entities: e }))}
+          state={currentData.state}
+          setState={(s) => setData((d) => ({ ...d, state: s }))}
+        />
       </div>
     )
   }

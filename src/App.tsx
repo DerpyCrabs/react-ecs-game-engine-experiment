@@ -19,6 +19,7 @@ function App() {
         viewportWidth='60vh'
         viewportHeight='30vh'
         debug={true}
+        showFrameRateControls={true}
         systems={[
           MiningSystem(),
           CarryingSystem(),

@@ -68,3 +68,11 @@ export type System<
       }
     | Entity<any>[]
 ]
+
+export interface DebugComponentProps {
+  systems: System<any>[]
+  entities: Entity<any>[]
+  state: any
+  setEntities: (e: Entity<any>[]) => void
+  setState: (s: any) => void
+}
