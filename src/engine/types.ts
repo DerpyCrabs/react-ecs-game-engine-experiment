@@ -43,18 +43,22 @@ export interface KeyUpEvent {
 }
 
 export type GlobalState<State, AdditionalFields = {}> = {
-  input: Event[]
-  viewportHeight: number
-  viewportWidth: number
   state: State
   lastFrameTimestamp: number
   allEntities: Entity<any>[]
 } & AdditionalFields
 
+export type ReactAdditionalGlobals = {
+  frameRate: number
+  input: Event[]
+  viewportHeight: number
+  viewportWidth: number
+}
+
 export type System<
   Components extends { [key: string]: Component } = {},
   State = any,
-  AdditionalGlobals = { frameRate: number }
+  AdditionalGlobals extends object = {}
 > = [
   string,
   SystemQuery<Components>,
@@ -70,9 +74,14 @@ export type System<
 ]
 
 export interface DebugComponentProps {
-  systems: System<any>[]
+  systems: System<any, any, ReactAdditionalGlobals>[]
   entities: Entity<any>[]
   state: any
   setEntities: (e: Entity<any>[]) => void
   setState: (s: any) => void
 }
+
+export type RSystem<
+  Components extends { [key: string]: Component } = {},
+  State = any
+> = System<Components, State, ReactAdditionalGlobals>

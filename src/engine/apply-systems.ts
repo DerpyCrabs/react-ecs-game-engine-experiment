@@ -1,7 +1,10 @@
 import React from 'react'
 import { Entity, SystemQuery, System, GlobalState } from './types'
 
-export default function applySystems<State, AdditionalGlobals = {}>(
+export default function applySystems<
+  State,
+  AdditionalGlobals extends object = {}
+>(
   entities: Entity<any>[],
   systems: System<any, any, AdditionalGlobals>[],
   global: GlobalState<State, AdditionalGlobals>

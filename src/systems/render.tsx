@@ -1,5 +1,5 @@
 import React from 'react'
-import { System } from '../engine'
+import { RSystem } from '../engine'
 import {
   SizeComponent,
   PositionComponent,
@@ -42,7 +42,7 @@ function DrawEntity({
 export function RenderSystem(
   width: number,
   height: number
-): System<RenderSystemQuery> {
+): RSystem<RenderSystemQuery> {
   return [
     'RenderSystem',
     ['position', 'sprite', 'size'],

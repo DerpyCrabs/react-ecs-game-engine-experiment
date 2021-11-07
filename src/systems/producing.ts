@@ -1,5 +1,5 @@
 import { ProducingOccupationComponent, StorageComponent } from '../components'
-import { Entity, System } from '../engine'
+import { Entity, RSystem } from '../engine'
 import { produce } from 'immer'
 
 type ProducingSystemQuery = {
@@ -7,7 +7,7 @@ type ProducingSystemQuery = {
   storage: StorageComponent
 }
 
-export function ProducingSystem(): System<ProducingSystemQuery> {
+export function ProducingSystem(): RSystem<ProducingSystemQuery> {
   return [
     'ProducingSystem',
     ['producingOccupation', 'storage'],

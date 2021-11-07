@@ -1,5 +1,5 @@
 import { ExtractionOccupationComponent, StorageComponent } from '../components'
-import { Entity, System } from '../engine'
+import { Entity, RSystem } from '../engine'
 import { produce } from 'immer'
 
 type MiningSystemQuery = {
@@ -7,7 +7,7 @@ type MiningSystemQuery = {
   storage: StorageComponent
 }
 
-export function MiningSystem(): System<MiningSystemQuery> {
+export function MiningSystem(): RSystem<MiningSystemQuery> {
   return [
     'MiningSystem',
     ['extractionOccupation', 'storage'],

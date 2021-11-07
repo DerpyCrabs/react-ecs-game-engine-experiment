@@ -1,6 +1,12 @@
 import * as React from 'react'
 import useDimensions from 'react-cool-dimensions'
-import { Entity, System, Event, DebugComponentProps } from './types'
+import {
+  Entity,
+  System,
+  Event,
+  DebugComponentProps,
+  ReactAdditionalGlobals,
+} from './types'
 import useInterval from './use-interval'
 import applySystems from './apply-systems'
 import Viewport from './Viewport'
@@ -19,7 +25,7 @@ export default function GameEngine({
   showFrameRateControls = false,
 }: {
   entities: Entity<any>[]
-  systems: System<any>[]
+  systems: System<any, any, ReactAdditionalGlobals>[]
   viewportHeight: string | number
   viewportWidth: string | number
   debug?: boolean
@@ -46,7 +52,7 @@ export default function GameEngine({
 
   const step = () => {
     setData(
-      applySystems(currentData.entities, systems, {
+      applySystems<any, ReactAdditionalGlobals>(currentData.entities, systems, {
         viewportHeight: currentViewportHeight,
         viewportWidth: currentViewportWidth,
         input: eventsRef.current,
