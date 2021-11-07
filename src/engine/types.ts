@@ -42,25 +42,25 @@ export interface KeyUpEvent {
   key: string
 }
 
-export interface GlobalState<State> {
+export type GlobalState<State, AdditionalFields = {}> = {
   input: Event[]
   viewportHeight: number
   viewportWidth: number
   state: State
   lastFrameTimestamp: number
-  frameRate: number
   allEntities: Entity<any>[]
-}
+} & AdditionalFields
 
 export type System<
   Components extends { [key: string]: Component } = {},
-  State = any
+  State = any,
+  AdditionalGlobals = { frameRate: number }
 > = [
   string,
   SystemQuery<Components>,
   (
     entities: Entity<Components>[],
-    global: GlobalState<State>
+    global: GlobalState<State, AdditionalGlobals>
   ) =>
     | {
         entities?: Entity<any>[]

@@ -27,7 +27,6 @@ export default function GameEngine({
     entities,
     state: initialState,
     lastFrameTimestamp: new Date().getTime(),
-    frameRate: frameRate,
   })
 
   const [paused, setPaused] = React.useState(false)
@@ -47,7 +46,7 @@ export default function GameEngine({
         input: eventsRef.current,
         state: currentData.state,
         lastFrameTimestamp: currentData.lastFrameTimestamp,
-        frameRate: currentData.frameRate,
+        frameRate: 1000 / ((new Date().getTime()) - currentData.lastFrameTimestamp),
         allEntities: currentData.entities,
       })
     )

@@ -1,22 +1,20 @@
 import React from 'react'
 import { Entity, SystemQuery, System, GlobalState } from './types'
 
-export default function applySystems<State>(
+export default function applySystems<State, AdditionalGlobals = {}>(
   entities: Entity<any>[],
-  systems: System<any>[],
-  global: GlobalState<State>
+  systems: System<any, any, AdditionalGlobals>[],
+  global: GlobalState<State, AdditionalGlobals>
 ): {
   entities: Entity<any>[]
   state: State
   lastFrameTimestamp: number
-  frameRate: number
 } {
   if (systems.length === 0) {
     return {
       entities,
       state: global.state,
       lastFrameTimestamp: new Date().getTime(),
-      frameRate: 1000 / (new Date().getTime() - global.lastFrameTimestamp),
     }
   } else {
     const [notApplicable, applicable] = splitEntitiesByQuery(
@@ -44,7 +42,6 @@ export default function applySystems<State>(
       entities: restSystems.entities,
       state: restSystems.state,
       lastFrameTimestamp: restSystems.lastFrameTimestamp,
-      frameRate: restSystems.frameRate,
     }
   }
 }
