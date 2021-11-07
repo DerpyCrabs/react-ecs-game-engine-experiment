@@ -46,20 +46,19 @@ export function RenderSystem(
   return [
     'RenderSystem',
     ['position', 'sprite', 'size'],
-    (entities, { viewportHeight, viewportWidth }) => {
+    (entities, { viewportHeight, viewportWidth, state }) => {
       return {
-        component: (
-          <>
-            {entities.map((e, i) => (
-              <DrawEntity
-                key={i}
-                entity={e.components}
-                xCoefficient={viewportWidth / width}
-                yCoefficient={viewportHeight / height}
-              />
-            ))}
-          </>
-        ),
+        state: {
+          ...state,
+          components: entities.map((e, i) => (
+            <DrawEntity
+              key={i}
+              entity={e.components}
+              xCoefficient={viewportWidth / width}
+              yCoefficient={viewportHeight / height}
+            />
+          )),
+        },
       }
     },
   ]

@@ -7,7 +7,6 @@ export default function applySystems<State>(
   global: GlobalState<State>
 ): {
   entities: Entity<any>[]
-  components: React.ReactNode[]
   state: State
   lastFrameTimestamp: number
   frameRate: number
@@ -15,7 +14,6 @@ export default function applySystems<State>(
   if (systems.length === 0) {
     return {
       entities,
-      components: [],
       state: global.state,
       lastFrameTimestamp: new Date().getTime(),
       frameRate: 1000 / (new Date().getTime() - global.lastFrameTimestamp),
@@ -30,9 +28,6 @@ export default function applySystems<State>(
     const newState = Array.isArray(systemOutput)
       ? undefined
       : systemOutput.state
-    const component = Array.isArray(systemOutput)
-      ? undefined
-      : systemOutput.component
     const newEntities = Array.isArray(systemOutput)
       ? systemOutput
       : systemOutput.entities
@@ -47,9 +42,6 @@ export default function applySystems<State>(
     })
     return {
       entities: restSystems.entities,
-      components: component
-        ? [component, ...restSystems.components]
-        : restSystems.components,
       state: restSystems.state,
       lastFrameTimestamp: restSystems.lastFrameTimestamp,
       frameRate: restSystems.frameRate,

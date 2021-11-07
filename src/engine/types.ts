@@ -61,9 +61,10 @@ export type System<
   (
     entities: Entity<Components>[],
     global: GlobalState<State>
-  ) => {
-    entities?: Entity<any>[]
-    component?: React.ReactNode
-    state?: State
-  } | Entity<any>[]
+  ) =>
+    | {
+        entities?: Entity<any>[]
+        state?: State
+      }
+    | Entity<any>[]
 ]

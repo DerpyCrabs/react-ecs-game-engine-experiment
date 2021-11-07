@@ -26,7 +26,7 @@ function App() {
           ProducingSystem(),
           RenderSystem(400, 200),
         ]}
-        initialState={{}}
+        initialState={{ components: [] }}
       />
     </div>
   )

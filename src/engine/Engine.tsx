@@ -25,7 +25,6 @@ export default function GameEngine({
   const [currentFrameRate, setCurrentFrameRate] = React.useState(frameRate)
   const [currentData, setData] = React.useState({
     entities,
-    components: [] as React.ReactNode[],
     state: initialState,
     lastFrameTimestamp: new Date().getTime(),
     frameRate: frameRate,
@@ -59,7 +58,7 @@ export default function GameEngine({
 
   const ViewportElement = (
     <Viewport
-      components={currentData.components}
+      components={currentData.state.components || []}
       viewportHeight={viewportHeight}
       viewportWidth={viewportWidth}
       eventsRef={eventsRef}
