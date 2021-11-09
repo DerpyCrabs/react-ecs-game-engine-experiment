@@ -1,10 +1,6 @@
-export type ItemType = 'ore' | 'brick'
+export type ItemType = string
 
-
-export enum FacilityId {
-  OreMine = 'OreMine',
-  BrickFactory = 'BrickFactory',
-}
+export type EntityId = string
 
 export interface StorageComponent {
   items: {
@@ -17,15 +13,15 @@ export interface OccupationComponent {
   progress: number
 }
 
-export interface FacilityComponent {
-  id: FacilityId
+export interface EntityIdComponent {
+  id: EntityId
 }
 
 export interface CarryingOccupationComponent extends OccupationComponent {
   speed: number
   capacity: number
-  sourceFacility: FacilityId
-  destinationFacility: FacilityId
+  sourceFacility: EntityId
+  destinationFacility: EntityId
   itemType: ItemType
 }
 

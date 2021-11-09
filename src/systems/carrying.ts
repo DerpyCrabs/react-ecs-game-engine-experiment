@@ -18,11 +18,11 @@ export function CarryingSystem(): RSystem<CarryingSystemQuery> {
               .carryingOccupation as CarryingOccupationComponent
             const sourceFacility = entities.find(
               (s: Entity<any>) =>
-                s.components?.facility?.id === occupation.sourceFacility
+                s.components?.entityId?.id === occupation.sourceFacility
             ) as Entity<{ storage: StorageComponent }>
             const destinationFacility = entities.find(
               (s: Entity<any>) =>
-                s.components?.facility?.id === occupation.destinationFacility
+                s.components?.entityId?.id === occupation.destinationFacility
             ) as Entity<{ storage: StorageComponent }>
             const items = e.components.storage.items
             const itemType = occupation.itemType

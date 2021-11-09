@@ -1,7 +1,7 @@
 import { CarryingOccupationComponent, PositionComponent } from '../components'
 import { Entity, System } from '../engine'
 import { produce } from 'immer'
-import { facilityInfo } from '../info/facility-info'
+import towerMap from '../maps/tower'
 
 type CarryingAnimationSystemQuery = {
   position: PositionComponent
@@ -17,10 +17,9 @@ export function CarryingAnimationSystem(): System<CarryingAnimationSystemQuery> 
         entities.forEach((e: Entity<CarryingAnimationSystemQuery>) => {
           const pos = e.components.position
           const sourcePos =
-            facilityInfo[e.components.carryingOccupation.sourceFacility]
-              .position
+            towerMap[e.components.carryingOccupation.sourceFacility].position
           const destinationPos =
-            facilityInfo[e.components.carryingOccupation.destinationFacility]
+            towerMap[e.components.carryingOccupation.destinationFacility]
               .position
 
           pos.x =
