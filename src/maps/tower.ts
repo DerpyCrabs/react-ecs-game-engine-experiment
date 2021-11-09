@@ -19,9 +19,6 @@ const towerMap = {
       progress: 0.0,
       itemType: ItemType.Ore,
     },
-    entityId: {
-      id: EntityId.OreMine,
-    },
     storage: {
       items: {
         ore: 0,
@@ -37,9 +34,6 @@ const towerMap = {
       inputItemType: ItemType.Ore,
       outputItemType: ItemType.Brick,
       progress: 0.0,
-    },
-    entityId: {
-      id: EntityId.BrickMaker,
     },
     storage: {
       items: {

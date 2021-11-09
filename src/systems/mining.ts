@@ -1,24 +1,32 @@
-import { ExtractionOccupationComponent, StorageComponent } from '../components'
+import {
+  EntityIdComponent,
+  ExtractionOccupationComponent,
+  StorageComponent,
+} from '../components'
 import { Entity, RSystem } from '../engine'
 import { produce } from 'immer'
 
 type MiningSystemQuery = {
   extractionOccupation: ExtractionOccupationComponent
   storage: StorageComponent
+  entityId: EntityIdComponent
 }
 
 export function MiningSystem(): RSystem<MiningSystemQuery> {
   return [
     'MiningSystem',
-    ['extractionOccupation', 'storage'],
-    (entities, { frameRate }) => {
+    ['extractionOccupation', 'storage', 'entityId'],
+    (entities, { frameRate, state: { boostedEntity } }) => {
       return produce((entities) => {
         entities.forEach((e: Entity<MiningSystemQuery>) => {
           const occupation = e.components.extractionOccupation
           const items = e.components.storage.items
           const itemType = occupation.itemType
+          const occupationSpeed =
+            occupation.speed *
+            (boostedEntity === e.components.entityId.id ? 3 : 1)
 
-          occupation.progress += occupation.speed * (1 / frameRate)
+          occupation.progress += occupationSpeed * (1 / frameRate)
 
           if (occupation.progress >= 1.0) {
             occupation.progress = 0

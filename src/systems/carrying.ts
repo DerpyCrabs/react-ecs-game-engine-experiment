@@ -1,16 +1,21 @@
-import { CarryingOccupationComponent, StorageComponent } from '../components'
+import {
+  CarryingOccupationComponent,
+  EntityIdComponent,
+  StorageComponent,
+} from '../components'
 import { Entity, RSystem } from '../engine'
 import { produce } from 'immer'
 
 type CarryingSystemQuery = {
   storage: StorageComponent
+  entityId: EntityIdComponent
 }
 
 export function CarryingSystem(): RSystem<CarryingSystemQuery> {
   return [
     'CarryingSystem',
-    ['storage'],
-    (entities, { frameRate }) => {
+    ['storage', 'entityId'],
+    (entities, { frameRate, state: { boostedEntity } }) => {
       return produce((entities) => {
         entities.forEach((e: Entity<CarryingSystemQuery | any>) => {
           if (e.components.carryingOccupation) {
@@ -30,6 +35,9 @@ export function CarryingSystem(): RSystem<CarryingSystemQuery> {
             const sourceItems = sourceFacility.components.storage.items
             const destinationItems =
               destinationFacility.components.storage.items
+            const occupationSpeed =
+              occupation.speed *
+              (boostedEntity === e.components.entityId.id ? 3 : 1)
 
             if (
               occupation.progress === 0 &&
@@ -37,9 +45,9 @@ export function CarryingSystem(): RSystem<CarryingSystemQuery> {
             ) {
               sourceItems[itemType] = (sourceItems[itemType] || 0) - capacity
               items[itemType] = capacity
-              occupation.progress += occupation.speed * (1 / frameRate)
+              occupation.progress += occupationSpeed * (1 / frameRate)
             } else if (occupation.progress !== 0) {
-              occupation.progress += occupation.speed * (1 / frameRate)
+              occupation.progress += occupationSpeed * (1 / frameRate)
 
               if (occupation.progress >= 0.5 && items[itemType] !== 0) {
                 destinationItems[itemType] =

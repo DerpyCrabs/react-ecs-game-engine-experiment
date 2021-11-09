@@ -1,29 +1,37 @@
-import { ProducingOccupationComponent, StorageComponent } from '../components'
+import {
+  EntityIdComponent,
+  ProducingOccupationComponent,
+  StorageComponent,
+} from '../components'
 import { Entity, RSystem } from '../engine'
 import { produce } from 'immer'
 
 type ProducingSystemQuery = {
   producingOccupation: ProducingOccupationComponent
   storage: StorageComponent
+  entityId: EntityIdComponent
 }
 
 export function ProducingSystem(): RSystem<ProducingSystemQuery> {
   return [
     'ProducingSystem',
-    ['producingOccupation', 'storage'],
-    (entities, { frameRate }) => {
+    ['producingOccupation', 'storage', 'entityId'],
+    (entities, { frameRate, state: { boostedEntity } }) => {
       return produce((entities) => {
         entities.forEach((e: Entity<ProducingSystemQuery>) => {
           const occupation = e.components.producingOccupation
           const items = e.components.storage.items
           const inputItemType = occupation.inputItemType
           const outputItemType = occupation.outputItemType
+          const occupationSpeed =
+            occupation.speed *
+            (boostedEntity === e.components.entityId.id ? 3 : 1)
 
           if (occupation.progress === 0 && items[inputItemType] !== 0) {
             items[inputItemType] = (items[inputItemType] || 0) - 1
-            occupation.progress += occupation.speed * (1 / frameRate)
+            occupation.progress += occupationSpeed * (1 / frameRate)
           } else if (occupation.progress !== 0) {
-            occupation.progress += occupation.speed * (1 / frameRate)
+            occupation.progress += occupationSpeed * (1 / frameRate)
 
             if (occupation.progress >= 1.0) {
               occupation.progress = 0

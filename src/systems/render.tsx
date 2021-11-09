@@ -31,6 +31,7 @@ function DrawEntity({
         top: entity.position.y * yCoefficient,
         backgroundColor: entity.sprite.color,
         zIndex: entity.sprite.zIndex || 0,
+        pointerEvents: 'none',
         ...(entity.sprite.spriteUrl
           ? { backgroundImage: entity.sprite.spriteUrl }
           : {}),

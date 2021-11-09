@@ -5,6 +5,7 @@ import towerMap from './maps/tower'
 import { CarryingSystem } from './systems/carrying'
 import { CarryingAnimationSystem } from './systems/carrying-animation'
 import { MiningSystem } from './systems/mining'
+import { MouseClickBoostSystem } from './systems/mouse-click-boost'
 import { ProducingSystem } from './systems/producing'
 import { RenderSystem } from './systems/render'
 
@@ -24,6 +25,7 @@ function App() {
           CarryingSystem(),
           CarryingAnimationSystem(),
           ProducingSystem(),
+          MouseClickBoostSystem(400, 200),
           RenderSystem(400, 200),
         ]}
         initialState={{ components: [], map: towerMap }}
