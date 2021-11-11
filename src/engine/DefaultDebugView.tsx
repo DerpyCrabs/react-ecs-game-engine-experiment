@@ -25,8 +25,8 @@ export default function DefaultDebugView({
           {i}: {JSON.stringify(entity)}, applicableSystems:{' '}
           {JSON.stringify(
             systems
-              .map((s) => (entityPassesQuery(entity, s[1]) ? s[0] : undefined))
-              .filter((s) => s !== undefined)
+              .map(s => (entityPassesQuery(entity, s[1]) ? s[0] : undefined))
+              .filter(s => s !== undefined)
           )}
         </div>
       ))}

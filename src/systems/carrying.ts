@@ -16,7 +16,7 @@ export function CarryingSystem(): RSystem<CarryingSystemQuery> {
     'CarryingSystem',
     ['storage', 'entityId'],
     (entities, { frameRate, state: { boostedEntity } }) => {
-      return produce((entities) => {
+      return produce(entities => {
         entities.forEach((e: Entity<CarryingSystemQuery | any>) => {
           if (e.components.carryingOccupation) {
             const occupation = e.components

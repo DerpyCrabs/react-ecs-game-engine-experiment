@@ -1,4 +1,4 @@
-import { Entity, MouseDownEvent, RSystem } from '../engine'
+import { MouseDownEvent, RSystem } from '../engine'
 import {
   EntityIdComponent,
   PositionComponent,
@@ -27,11 +27,11 @@ export function MouseClickBoostSystem(
       { input, state: { boostedEntity }, viewportHeight, viewportWidth }
     ) => {
       const mouseClickEvents = input
-        .filter((i) => i.kind === 'mouseDown')
+        .filter(i => i.kind === 'mouseDown')
         .reverse() as MouseDownEvent[]
       const boostedEntityId = (() => {
         for (const e of R.sortBy(
-          (e) => -(e.components.sprite.zIndex || 0),
+          e => -(e.components.sprite.zIndex || 0),
           entities
         )) {
           for (const event of mouseClickEvents) {

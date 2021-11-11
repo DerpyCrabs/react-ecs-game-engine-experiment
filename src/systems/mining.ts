@@ -17,7 +17,7 @@ export function MiningSystem(): RSystem<MiningSystemQuery> {
     'MiningSystem',
     ['extractionOccupation', 'storage', 'entityId'],
     (entities, { frameRate, state: { boostedEntity } }) => {
-      return produce((entities) => {
+      return produce(entities => {
         entities.forEach((e: Entity<MiningSystemQuery>) => {
           const occupation = e.components.extractionOccupation
           const items = e.components.storage.items

@@ -11,7 +11,7 @@ export type {
   Entity,
   Component,
   DebugComponentProps,
-  RSystem
+  RSystem,
 } from './types'
 
 export default GameEngine

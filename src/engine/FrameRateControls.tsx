@@ -27,7 +27,7 @@ export default function FrameRateControls({
           value={currentFrameRate}
           min={5}
           max={60}
-          onChange={(e) => setCurrentFrameRate(Number(e.target.value))}
+          onChange={e => setCurrentFrameRate(Number(e.target.value))}
         />
         {currentFrameRate}
       </span>

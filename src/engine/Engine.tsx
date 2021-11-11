@@ -96,9 +96,9 @@ export default function GameEngine({
         <DebugComponent
           systems={systems}
           entities={currentData.entities}
-          setEntities={(e) => setData((d) => ({ ...d, entities: e }))}
+          setEntities={e => setData(d => ({ ...d, entities: e }))}
           state={currentData.state}
-          setState={(s) => setData((d) => ({ ...d, state: s }))}
+          setState={s => setData(d => ({ ...d, state: s }))}
         />
       </div>
     )

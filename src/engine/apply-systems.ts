@@ -1,4 +1,3 @@
-import React from 'react'
 import { Entity, SystemQuery, System, GlobalState } from './types'
 
 export default function applySystems<
@@ -66,5 +65,5 @@ export function entityPassesQuery(
   e: Entity<any>,
   query: SystemQuery<any>
 ): boolean {
-  return query.every((q) => Object.keys(e.components).includes(q as string))
+  return query.every(q => Object.keys(e.components).includes(q as string))
 }

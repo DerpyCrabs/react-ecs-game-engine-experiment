@@ -12,8 +12,8 @@ export function CarryingAnimationSystem(): System<CarryingAnimationSystemQuery> 
   return [
     'CarryingAnimationSystem',
     ['position', 'carryingOccupation'],
-    (entities) => {
-      return produce((entities) => {
+    entities => {
+      return produce(entities => {
         entities.forEach((e: Entity<CarryingAnimationSystemQuery>) => {
           const pos = e.components.position
           const sourcePos =

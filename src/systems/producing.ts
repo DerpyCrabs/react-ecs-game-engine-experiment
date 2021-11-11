@@ -17,7 +17,7 @@ export function ProducingSystem(): RSystem<ProducingSystemQuery> {
     'ProducingSystem',
     ['producingOccupation', 'storage', 'entityId'],
     (entities, { frameRate, state: { boostedEntity } }) => {
-      return produce((entities) => {
+      return produce(entities => {
         entities.forEach((e: Entity<ProducingSystemQuery>) => {
           const occupation = e.components.producingOccupation
           const items = e.components.storage.items
