@@ -18,7 +18,6 @@ export interface EntityIdComponent {
 }
 
 export interface CarryingOccupationComponent extends OccupationComponent {
-  speed: number
   capacity: number
   sourceFacility: EntityId
   destinationFacility: EntityId
@@ -26,12 +25,10 @@ export interface CarryingOccupationComponent extends OccupationComponent {
 }
 
 export interface ExtractionOccupationComponent extends OccupationComponent {
-  speed: number
   itemType: ItemType
 }
 
 export interface ProducingOccupationComponent extends OccupationComponent {
-  speed: number
   inputItemType: ItemType
   outputItemType: ItemType
 }

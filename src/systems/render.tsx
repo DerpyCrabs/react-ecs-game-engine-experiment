@@ -41,6 +41,8 @@ function DrawEntity({
   )
 }
 
+const DrawEntityMemoized = React.memo(DrawEntity)
+
 export function RenderSystem(
   width: number,
   height: number
@@ -53,7 +55,7 @@ export function RenderSystem(
         state: {
           ...state,
           components: entities.map((e, i) => (
-            <DrawEntity
+            <DrawEntityMemoized
               key={i}
               entity={e.components}
               xCoefficient={viewportWidth / width}

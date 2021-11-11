@@ -6,7 +6,6 @@ import {
   SpriteComponent,
 } from '../components'
 import * as R from 'ramda'
-import { State } from '@pixi/core'
 import { System } from '../types'
 
 type MouseClickBoostSystemQuery = {
@@ -25,7 +24,7 @@ export function MouseClickBoostSystem(
     ['position', 'size', 'entityId', 'sprite'],
     (
       entities,
-      { input, state: { boostedEntity }, viewportHeight, viewportWidth }
+      { input, state, viewportHeight, viewportWidth }
     ) => {
       const mouseClickEvents = input
         .filter(i => i.kind === 'mouseDown')
@@ -52,7 +51,7 @@ export function MouseClickBoostSystem(
 
       return {
         entities,
-        state: { ...State, boostedEntity: boostedEntityId || boostedEntity },
+        state: { ...state, boostedEntity: boostedEntityId || state.boostedEntity },
       }
     },
   ]

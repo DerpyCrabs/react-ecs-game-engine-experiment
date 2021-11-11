@@ -74,9 +74,7 @@ export default function Viewport({
       onMouseUp={onMouseUp}
       onMouseMove={onMouseMove}
     >
-      {components.map((c, i) => (
-        <div key={i}>{c}</div>
-      ))}
+      {components}
     </div>
   )
 }
