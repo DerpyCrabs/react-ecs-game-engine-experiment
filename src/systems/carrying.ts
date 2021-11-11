@@ -3,15 +3,16 @@ import {
   EntityIdComponent,
   StorageComponent,
 } from '../components'
-import { Entity, RSystem } from '../engine'
+import { Entity } from '../engine'
 import { produce } from 'immer'
+import { System } from '../types'
 
 type CarryingSystemQuery = {
   storage: StorageComponent
   entityId: EntityIdComponent
 }
 
-export function CarryingSystem(): RSystem<CarryingSystemQuery> {
+export function CarryingSystem(): System<CarryingSystemQuery> {
   return [
     'CarryingSystem',
     ['storage', 'entityId'],

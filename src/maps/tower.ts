@@ -21,7 +21,7 @@ const towerMap = {
     },
     storage: {
       items: {
-        ore: 0,
+        [ItemType.Ore]: 0,
       },
     },
   },
@@ -37,8 +37,8 @@ const towerMap = {
     },
     storage: {
       items: {
-        ore: 0,
-        brick: 0,
+        [ItemType.Ore]: 0,
+        [ItemType.Brick]: 0,
       },
     },
   },
@@ -56,7 +56,7 @@ const towerMap = {
     },
     storage: {
       items: {
-        ore: 0,
+        [ItemType.Ore]: 0,
       },
     },
   },

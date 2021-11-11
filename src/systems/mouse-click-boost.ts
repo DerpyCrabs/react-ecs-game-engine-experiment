@@ -1,4 +1,4 @@
-import { MouseDownEvent, RSystem } from '../engine'
+import { MouseDownEvent } from '../engine'
 import {
   EntityIdComponent,
   PositionComponent,
@@ -7,6 +7,7 @@ import {
 } from '../components'
 import * as R from 'ramda'
 import { State } from '@pixi/core'
+import { System } from '../types'
 
 type MouseClickBoostSystemQuery = {
   position: PositionComponent
@@ -18,7 +19,7 @@ type MouseClickBoostSystemQuery = {
 export function MouseClickBoostSystem(
   screenWidth: number,
   screenHeight: number
-): RSystem<MouseClickBoostSystemQuery> {
+): System<MouseClickBoostSystemQuery> {
   return [
     'MouseClickBoostSystem',
     ['position', 'size', 'entityId', 'sprite'],

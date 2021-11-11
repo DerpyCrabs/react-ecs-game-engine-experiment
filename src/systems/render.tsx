@@ -1,10 +1,10 @@
 import React from 'react'
-import { RSystem } from '../engine'
 import {
   SizeComponent,
   PositionComponent,
   SpriteComponent,
 } from '../components'
+import { System } from '../types'
 
 type RenderSystemQuery = {
   position: PositionComponent
@@ -44,7 +44,7 @@ function DrawEntity({
 export function RenderSystem(
   width: number,
   height: number
-): RSystem<RenderSystemQuery> {
+): System<RenderSystemQuery> {
   return [
     'RenderSystem',
     ['position', 'sprite', 'size'],

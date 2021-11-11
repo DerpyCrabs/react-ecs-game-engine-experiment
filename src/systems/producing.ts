@@ -3,8 +3,9 @@ import {
   ProducingOccupationComponent,
   StorageComponent,
 } from '../components'
-import { Entity, RSystem } from '../engine'
+import { Entity } from '../engine'
 import { produce } from 'immer'
+import { System } from '../types'
 
 type ProducingSystemQuery = {
   producingOccupation: ProducingOccupationComponent
@@ -12,7 +13,7 @@ type ProducingSystemQuery = {
   entityId: EntityIdComponent
 }
 
-export function ProducingSystem(): RSystem<ProducingSystemQuery> {
+export function ProducingSystem(): System<ProducingSystemQuery> {
   return [
     'ProducingSystem',
     ['producingOccupation', 'storage', 'entityId'],

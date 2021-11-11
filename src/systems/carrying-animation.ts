@@ -1,7 +1,8 @@
 import { CarryingOccupationComponent, PositionComponent } from '../components'
-import { Entity, System } from '../engine'
+import { Entity } from '../engine'
 import { produce } from 'immer'
 import towerMap from '../maps/tower'
+import { System } from '../types'
 
 type CarryingAnimationSystemQuery = {
   position: PositionComponent

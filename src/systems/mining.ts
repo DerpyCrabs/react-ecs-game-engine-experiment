@@ -3,8 +3,9 @@ import {
   ExtractionOccupationComponent,
   StorageComponent,
 } from '../components'
-import { Entity, RSystem } from '../engine'
+import { Entity } from '../engine'
 import { produce } from 'immer'
+import { System } from '../types'
 
 type MiningSystemQuery = {
   extractionOccupation: ExtractionOccupationComponent
@@ -12,7 +13,7 @@ type MiningSystemQuery = {
   entityId: EntityIdComponent
 }
 
-export function MiningSystem(): RSystem<MiningSystemQuery> {
+export function MiningSystem(): System<MiningSystemQuery> {
   return [
     'MiningSystem',
     ['extractionOccupation', 'storage', 'entityId'],

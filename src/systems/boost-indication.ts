@@ -1,4 +1,4 @@
-import { Entity, RSystem } from '../engine'
+import { Entity } from '../engine'
 import {
   EntityIdComponent,
   PositionComponent,
@@ -6,6 +6,7 @@ import {
   SpriteComponent,
 } from '../components'
 import { produce } from 'immer'
+import { System } from '../types'
 
 type BoostIndicationSystemQuery = {
   position: PositionComponent
@@ -14,11 +15,11 @@ type BoostIndicationSystemQuery = {
   sprite: SpriteComponent
 }
 
-export function BoostIndicationSystem(): RSystem<BoostIndicationSystemQuery> {
+export function BoostIndicationSystem(): System<BoostIndicationSystemQuery> {
   return [
     'BoostIndicationSystem',
     ['position', 'size', 'entityId', 'sprite'],
-    (entities, { input, state: { boostedEntity } }) => {
+    (entities, { state: { boostedEntity } }) => {
       return produce((entities: Entity<BoostIndicationSystemQuery>[]) => {
         entities.forEach(e => {
           if (boostedEntity && e.components.entityId.id === boostedEntity) {
