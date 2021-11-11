@@ -45,6 +45,7 @@ export interface SpriteComponent {
   color?: string
   spriteUrl?: string
   zIndex?: number
+  border?: string
 }
 
 export interface SizeComponent {

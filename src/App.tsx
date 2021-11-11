@@ -2,6 +2,7 @@ import React from 'react'
 import GameEngine from './engine'
 import generateEntities from './entities/generateEntities'
 import towerMap from './maps/tower'
+import { BoostIndicationSystem } from './systems/boost-indication'
 import { CarryingSystem } from './systems/carrying'
 import { CarryingAnimationSystem } from './systems/carrying-animation'
 import { MiningSystem } from './systems/mining'
@@ -26,6 +27,7 @@ function App() {
           CarryingAnimationSystem(),
           ProducingSystem(),
           MouseClickBoostSystem(400, 200),
+          BoostIndicationSystem(),
           RenderSystem(400, 200),
         ]}
         initialState={{ components: [], map: towerMap }}
