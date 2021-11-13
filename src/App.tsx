@@ -15,7 +15,7 @@ import { GlobalState } from './types'
 import reducer from './ui/reducer'
 
 function App() {
-  const entities = generateEntities(towerMap as any)
+  const entities = generateEntities(towerMap.entities as any)
 
   return (
     <div>
