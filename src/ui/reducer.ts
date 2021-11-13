@@ -57,6 +57,7 @@ function getEntitiesToSellResource(
         return [...entitiesToSell, [i, item]]
       } else {
         entitiesToSell.push([i, item])
+        currentAmount += item
       }
     }
   }
