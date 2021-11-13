@@ -53,9 +53,7 @@ export default function DebugView({
               <td>{getOccupationType(e.components)}</td>
               <td>{getCommonOccupationParams(e.components).speed}</td>
               <td>
-                {Math.round(
-                  getCommonOccupationParams(e.components).progress * 100
-                ) / 100}
+                {getCommonOccupationParams(e.components).progress.toFixed(2)}
               </td>
               <td>{e.components.storage?.items?.Ore || 0}</td>
               <td>{e.components.storage?.items?.Brick || 0}</td>

@@ -18,9 +18,9 @@ export function CarryingAnimationSystem(): System<CarryingAnimationSystemQuery> 
         entities.forEach((e: Entity<CarryingAnimationSystemQuery>) => {
           const pos = e.components.position
           const sourcePos =
-            towerMap[e.components.carryingOccupation.sourceFacility].position
+            towerMap.entities[e.components.carryingOccupation.sourceFacility].position
           const destinationPos =
-            towerMap[e.components.carryingOccupation.destinationFacility]
+            towerMap.entities[e.components.carryingOccupation.destinationFacility]
               .position
 
           pos.x =

@@ -10,7 +10,9 @@ import { MiningSystem } from './systems/mining'
 import { MouseClickBoostSystem } from './systems/mouse-click-boost'
 import { ProducingSystem } from './systems/producing'
 import { RenderSystem } from './systems/render'
+import { UiRenderSystem } from './systems/ui-render'
 import { GlobalState } from './types'
+import reducer from './ui/reducer'
 
 function App() {
   const entities = generateEntities(towerMap as any)
@@ -32,6 +34,7 @@ function App() {
           MouseClickBoostSystem(400, 200),
           BoostIndicationSystem(),
           RenderSystem(400, 200),
+          UiRenderSystem(400, 200, reducer),
         ]}
         initialState={
           {
@@ -39,6 +42,9 @@ function App() {
             map: towerMap,
             gold: 0,
             boostedEntity: undefined,
+            uiState: {
+              sellWindowOpen: false,
+            },
           } as GlobalState
         }
       />
