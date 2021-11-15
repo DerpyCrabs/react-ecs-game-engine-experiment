@@ -25,6 +25,9 @@ const towerMap = {
           [ItemType.Ore]: 0,
         },
       },
+      level: {
+        level: 1,
+      },
     },
     [EntityId.BrickMaker]: {
       position: { x: 120, y: 100 },
@@ -41,6 +44,9 @@ const towerMap = {
           [ItemType.Ore]: 0,
           [ItemType.Brick]: 0,
         },
+      },
+      level: {
+        level: 1,
       },
     },
     [EntityId.OreCarrier]: {
@@ -60,6 +66,9 @@ const towerMap = {
           [ItemType.Ore]: 0,
         },
       },
+      level: {
+        level: 1,
+      },
     },
   },
   resources: {
@@ -68,6 +77,21 @@ const towerMap = {
     },
     [ItemType.Brick]: {
       cost: 5,
+    },
+  },
+  upgrades: {
+    [EntityId.OreMine as string]: {
+      speed: (level: number) => 0.5 * level,
+      upgradeCost: (level: number) => 50 * level * 1.2,
+    },
+    [EntityId.OreCarrier]: {
+      speed: (level: number) => 0.4 * level,
+      upgradeCost: (level: number) => 40 * level * 1.2,
+      capacity: (level: number) => 2 + Math.floor(level / 2),
+    },
+    [EntityId.BrickMaker]: {
+      speed: (level: number) => 0.5 * level,
+      upgradeCost: (level: number) => 50 * level * 1.2,
     },
   },
 }

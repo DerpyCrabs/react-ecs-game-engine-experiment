@@ -10,13 +10,12 @@ export type GlobalState = {
   map: typeof towerMap
   components: React.ReactNode[]
   uiState: {
-    sellWindowOpen: boolean
+    openedWindow: 'upgrade' | 'sell' | null
   }
 }
 
 export type System<Components extends { [key: string]: Component } = {}> =
   RSystem<Components, GlobalState>
-
 
 export type UIProps = {
   entities: Entity<any>[]

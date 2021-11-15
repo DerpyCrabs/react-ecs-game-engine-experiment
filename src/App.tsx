@@ -43,7 +43,7 @@ function App() {
             gold: 0,
             boostedEntity: undefined,
             uiState: {
-              sellWindowOpen: false,
+              openedWindow: null,
             },
           } as GlobalState
         }

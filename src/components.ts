@@ -49,3 +49,7 @@ export interface SizeComponent {
   width: number
   height: number
 }
+
+export interface LevelComponent {
+  level: number
+}

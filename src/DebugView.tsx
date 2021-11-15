@@ -40,6 +40,7 @@ export default function DebugView({
             <th>Entity</th>
             <th>OccupationType</th>
             <th>Speed</th>
+            <th>Capacity</th>
             <th>Progress</th>
             <th>Ore</th>
             <th>Brick</th>
@@ -52,6 +53,11 @@ export default function DebugView({
               <td>{e.components.entityId?.id}</td>
               <td>{getOccupationType(e.components)}</td>
               <td>{getCommonOccupationParams(e.components).speed}</td>
+              <td>
+                {e.components?.carryingOccupation
+                  ? e.components.carryingOccupation.capacity.toFixed(2)
+                  : 'N/A'}
+              </td>
               <td>
                 {getCommonOccupationParams(e.components).progress.toFixed(2)}
               </td>

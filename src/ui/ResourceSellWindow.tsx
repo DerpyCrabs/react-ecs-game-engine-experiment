@@ -27,13 +27,16 @@ export default function ResourceSellWindow({
   entities,
   dispatch,
 }: UIProps) {
-  if (!state.uiState.sellWindowOpen) {
+  if (state.uiState.openedWindow !== 'sell') {
     return null
   }
   return (
     <div style={{ backgroundColor: 'lightblue' }}>
       {Object.entries(countResources(entities)).map(([item, amount]) => (
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div
+          key={item}
+          style={{ display: 'flex', justifyContent: 'space-between' }}
+        >
           <span>
             {item}: {amount}
           </span>

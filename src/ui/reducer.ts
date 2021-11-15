@@ -4,6 +4,12 @@ import { Entity } from '../engine'
 import { UIAction } from './actions'
 import { produce } from 'immer'
 import towerMap from '../maps/tower'
+import {
+  CarryingOccupationComponent,
+  ExtractionOccupationComponent,
+  LevelComponent,
+  ProducingOccupationComponent,
+} from '../components'
 
 export default function reducer(
   s: GlobalState,
@@ -12,9 +18,9 @@ export default function reducer(
 ): [GlobalState, Entity<any>[]] {
   const stateL = R.lensProp<GlobalState, 'uiState'>('uiState')
   switch (a.action) {
-    case 'ToggleResourceSellWindow':
+    case 'ToggleWindow':
       return [
-        R.over(R.compose(stateL, R.lensProp('sellWindowOpen')), R.not, s),
+        R.set(R.compose(stateL, R.lensProp('openedWindow')), a.window, s),
         es,
       ]
     case 'SellResource': {
@@ -33,6 +39,23 @@ export default function reducer(
           newEntities,
         ]
       }
+      break
+    }
+    case 'UpgradeFacility': {
+      return produce(([s, es]: [GlobalState, Entity<any>[]]) => {
+        const entity = es.find(e => e.components?.entityId?.id === a.entityId)
+        const entityLevelComponent = entity?.components?.level
+        const entityUpgrades = towerMap.upgrades[a.entityId]
+        if (
+          entity &&
+          entityUpgrades &&
+          entityLevelComponent &&
+          entityUpgrades.upgradeCost(entityLevelComponent.level + 1) <= s.gold
+        ) {
+          upgradeEntity(entity, entityUpgrades)
+          s.gold -= entityUpgrades.upgradeCost(entityLevelComponent.level)
+        }
+      })([s, es])
     }
   }
   return [s, es]
@@ -62,4 +85,26 @@ function getEntitiesToSellResource(
     }
   }
   return null
+}
+
+function upgradeEntity(
+  e: Entity<{
+    level: LevelComponent
+    producingOccupation?: ProducingOccupationComponent
+    carryingOccupation?: CarryingOccupationComponent
+    extractionOccupation?: ExtractionOccupationComponent
+  }>,
+  upgrades: typeof towerMap.upgrades[string]
+): void {
+  const nextLevel = e.components.level.level + 1
+  if (e.components?.carryingOccupation) {
+    e.components.carryingOccupation.speed = upgrades.speed(nextLevel)
+    e.components.carryingOccupation.capacity =
+      upgrades.capacity?.(nextLevel) || 0
+  } else if (e.components?.producingOccupation) {
+    e.components.producingOccupation.speed = upgrades.speed(nextLevel)
+  } else if (e.components?.extractionOccupation) {
+    e.components.extractionOccupation.speed = upgrades.speed(nextLevel)
+  }
+  e.components.level.level = nextLevel
 }
