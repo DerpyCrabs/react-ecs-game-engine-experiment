@@ -1,37 +1,33 @@
 import React from 'react'
-import { Entity } from '../engine'
 import { UIProps } from '../types'
-
-function countResources(entities: Entity<any>[]): { [item: string]: number } {
-  const resources: any = {}
-  entities.forEach(e => {
-    const items = e.components.storage?.items
-    if (
-      items &&
-      (e.components.producingOccupation || e.components.extractionOccupation)
-    ) {
-      Object.entries(items).forEach(([itemType, amount]) => {
-        if (resources[itemType]) {
-          resources[itemType] += amount
-        } else {
-          resources[itemType] = amount
-        }
-      })
-    }
-  })
-  return resources
-}
+import { countResources, sellAmountVariants } from './utils'
 
 export default function ResourceSellWindow({
   state,
   entities,
   dispatch,
 }: UIProps) {
-  if (state.uiState.openedWindow !== 'sell') {
+  if (!state.uiState.isSellWindowOpen) {
     return null
   }
+  const [sellAmountVariantIndex, setSellAmountVariantIndex] = React.useState(0)
+
   return (
-    <div style={{ backgroundColor: 'lightblue' }}>
+    <div
+      style={{ backgroundColor: 'lightcyan', overflowY: 'auto', width: '35%' }}
+    >
+      <div style={{ display: 'flex', marginBottom: '5px' }}>
+        {sellAmountVariants.map((v, i) => (
+          <button
+            style={{ flexGrow: 1 }}
+            key={i}
+            onClick={() => setSellAmountVariantIndex(i)}
+          >
+            {v}
+          </button>
+        ))}
+      </div>
+
       {Object.entries(countResources(entities)).map(([item, amount]) => (
         <div
           key={item}
@@ -42,10 +38,14 @@ export default function ResourceSellWindow({
           </span>
           <button
             onClick={() =>
-              dispatch({ action: 'SellResource', resource: item, amount: 10 })
+              dispatch({
+                action: 'SellResource',
+                resource: item,
+                amount: sellAmountVariants[sellAmountVariantIndex],
+              })
             }
           >
-            Sell 10
+            Sell {sellAmountVariants[sellAmountVariantIndex]}
           </button>
         </div>
       ))}

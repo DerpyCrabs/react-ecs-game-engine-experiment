@@ -10,6 +10,7 @@ import {
   LevelComponent,
   ProducingOccupationComponent,
 } from '../components'
+import { countResources, sellAmountVariantToMultiplier } from './utils'
 
 export default function reducer(
   s: GlobalState,
@@ -18,13 +19,25 @@ export default function reducer(
 ): [GlobalState, Entity<any>[]] {
   const stateL = R.lensProp<GlobalState, 'uiState'>('uiState')
   switch (a.action) {
-    case 'ToggleWindow':
+    case 'ToggleSellWindow':
       return [
-        R.set(R.compose(stateL, R.lensProp('openedWindow')), a.window, s),
+        R.over(R.compose(stateL, R.lensProp('isSellWindowOpen')), R.not, s),
+        es,
+      ]
+    case 'ToggleUpgradeWindow':
+      return [
+        R.over(R.compose(stateL, R.lensProp('isUpgradeWindowOpen')), R.not, s),
         es,
       ]
     case 'SellResource': {
-      const entitiesToSell = getEntitiesToSellResource(es, a.resource, a.amount)
+      const resourceAmount = Math.floor(
+        countResources(es)[a.resource] * sellAmountVariantToMultiplier(a.amount)
+      )
+      const entitiesToSell = getEntitiesToSellResource(
+        es,
+        a.resource,
+        resourceAmount
+      )
       if (entitiesToSell !== null) {
         const newEntities = produce(entities => {
           entitiesToSell.forEach(([index, amount]) => {
@@ -34,7 +47,9 @@ export default function reducer(
         return [
           {
             ...s,
-            gold: s.gold + a.amount * towerMap.resources[a.resource].cost || 0,
+            gold:
+              s.gold + resourceAmount * towerMap.resources[a.resource].cost ||
+              0,
           },
           newEntities,
         ]

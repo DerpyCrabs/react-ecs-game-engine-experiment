@@ -10,7 +10,8 @@ export type GlobalState = {
   map: typeof towerMap
   components: React.ReactNode[]
   uiState: {
-    openedWindow: 'upgrade' | 'sell' | null
+    isSellWindowOpen: boolean
+    isUpgradeWindowOpen: boolean
   }
 }
 

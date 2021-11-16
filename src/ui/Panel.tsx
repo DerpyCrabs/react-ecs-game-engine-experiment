@@ -16,43 +16,41 @@ export default function Panel({ entities, state, dispatch }: UIProps) {
       <div>
         <div
           style={{
-            backgroundColor: 'white',
+            backgroundColor: 'lightblue',
             display: 'flex',
+            width: '600px',
+            justifyContent: 'space-between',
             paddingLeft: 5,
             paddingRight: 5,
           }}
         >
+          <button
+            style={{ width: '80px' }}
+            onClick={() => dispatch({ action: 'ToggleSellWindow' })}
+          >
+            Sell
+          </button>
+
           <span style={{ paddingRight: 5 }}>Gold: {state.gold}</span>
-          {state.uiState.openedWindow !== null ? (
-            <button
-              style={{ width: '160px' }}
-              onClick={() => dispatch({ action: 'ToggleWindow', window: null })}
-            >
-              Close
-            </button>
-          ) : (
-            <>
-              <button
-                style={{ width: '80px' }}
-                onClick={() =>
-                  dispatch({ action: 'ToggleWindow', window: 'sell' })
-                }
-              >
-                Sell
-              </button>
-              <button
-                style={{ width: '80px' }}
-                onClick={() =>
-                  dispatch({ action: 'ToggleWindow', window: 'upgrade' })
-                }
-              >
-                Upgrade
-              </button>
-            </>
-          )}
+          <button
+            style={{ width: '80px' }}
+            onClick={() => dispatch({ action: 'ToggleUpgradeWindow' })}
+          >
+            Upgrade
+          </button>
         </div>
-        <ResourceSellWindow {...{ entities, state, dispatch }} />
-        <UpgradeWindow {...{ entities, state, dispatch }} />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            zIndex: 9999999,
+            maxHeight: '100px',
+          }}
+        >
+          <ResourceSellWindow {...{ entities, state, dispatch }} />
+          <div></div>
+          <UpgradeWindow {...{ entities, state, dispatch }} />
+        </div>
       </div>
     </div>
   )

@@ -5,7 +5,7 @@ import towerMap from '../maps/tower'
 import { UIProps } from '../types'
 
 export default function UpgradeWindow({ entities, state, dispatch }: UIProps) {
-  if (state.uiState.openedWindow !== 'upgrade') {
+  if (!state.uiState.isUpgradeWindowOpen) {
     return null
   }
 
@@ -25,7 +25,9 @@ export default function UpgradeWindow({ entities, state, dispatch }: UIProps) {
   ][]
 
   return (
-    <div style={{ backgroundColor: 'lightblue' }}>
+    <div
+      style={{ backgroundColor: 'lightcyan', overflowY: 'auto', width: '35%' }}
+    >
       {upgradableEntities.map(([entityId, entity]) => (
         <div
           key={entityId}

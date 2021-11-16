@@ -1,5 +1,5 @@
 import React from 'react'
-import { DebugComponentProps, Entity } from './engine'
+import { Entity } from './engine'
 import { GlobalState } from './types'
 import './DebugView.css'
 import { OccupationComponent } from './components'
@@ -33,12 +33,12 @@ export default function DebugView({
 }) {
   return (
     <div>
-      <span>gold: {state.gold.toString()}</span>
       <table>
         <thead>
           <tr>
             <th>Entity</th>
             <th>OccupationType</th>
+            <th>Level</th>
             <th>Speed</th>
             <th>Capacity</th>
             <th>Progress</th>
@@ -52,7 +52,10 @@ export default function DebugView({
             <tr key={i}>
               <td>{e.components.entityId?.id}</td>
               <td>{getOccupationType(e.components)}</td>
-              <td>{getCommonOccupationParams(e.components).speed}</td>
+              <td>{e.components?.level?.level || 'N/A'}</td>
+              <td>
+                {getCommonOccupationParams(e.components).speed.toFixed(2)}
+              </td>
               <td>
                 {e.components?.carryingOccupation
                   ? e.components.carryingOccupation.capacity.toFixed(2)

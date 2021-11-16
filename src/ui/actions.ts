@@ -1,15 +1,24 @@
-export type ToggleWindow = {
-  action: 'ToggleWindow'
-  window: 'upgrade' | 'sell' | null
+import { SellAmount } from './utils'
+
+export type ToggleSellWindow = {
+  action: 'ToggleSellWindow'
 }
+export type ToggleUpgradeWindow = {
+  action: 'ToggleUpgradeWindow'
+}
+
 export type SellResource = {
   action: 'SellResource'
   resource: string
-  amount: number
+  amount: SellAmount
 }
 export type UpgradeFacility = {
   action: 'UpgradeFacility'
   entityId: string
 }
 
-export type UIAction = ToggleWindow | SellResource | UpgradeFacility
+export type UIAction =
+  | ToggleSellWindow
+  | ToggleUpgradeWindow
+  | SellResource
+  | UpgradeFacility
