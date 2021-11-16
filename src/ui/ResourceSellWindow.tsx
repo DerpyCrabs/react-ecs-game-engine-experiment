@@ -1,6 +1,10 @@
 import React from 'react'
 import { UIProps } from '../types'
-import { countResources, sellAmountVariants } from './utils'
+import {
+  countResources,
+  sellAmountVariants,
+  sellAmountVariantToMultiplier,
+} from './utils'
 
 export default function ResourceSellWindow({
   state,
@@ -19,7 +23,11 @@ export default function ResourceSellWindow({
       <div style={{ display: 'flex', marginBottom: '5px' }}>
         {sellAmountVariants.map((v, i) => (
           <button
-            style={{ flexGrow: 1 }}
+            style={{
+              flexGrow: 1,
+              backgroundColor:
+                i === sellAmountVariantIndex ? 'lightgray' : undefined,
+            }}
             key={i}
             onClick={() => setSellAmountVariantIndex(i)}
           >
@@ -45,7 +53,13 @@ export default function ResourceSellWindow({
               })
             }
           >
-            Sell {sellAmountVariants[sellAmountVariantIndex]}
+            Sell{' '}
+            {Math.floor(
+              amount *
+                sellAmountVariantToMultiplier(
+                  sellAmountVariants[sellAmountVariantIndex]
+                )
+            )}
           </button>
         </div>
       ))}
