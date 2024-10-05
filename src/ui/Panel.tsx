@@ -1,4 +1,3 @@
-import React from 'react'
 import { UIProps } from '../types'
 import ResourceSellWindow from './ResourceSellWindow'
 import UpgradeWindow from './UpgradeWindow'
@@ -24,18 +23,12 @@ export default function Panel({ entities, state, dispatch }: UIProps) {
             paddingRight: 5,
           }}
         >
-          <button
-            style={{ width: '80px' }}
-            onClick={() => dispatch({ action: 'ToggleSellWindow' })}
-          >
+          <button style={{ width: '80px' }} onClick={() => dispatch({ action: 'ToggleSellWindow' })}>
             Sell
           </button>
 
           <span style={{ paddingRight: 5 }}>Gold: {state.gold}</span>
-          <button
-            style={{ width: '80px' }}
-            onClick={() => dispatch({ action: 'ToggleUpgradeWindow' })}
-          >
+          <button style={{ width: '80px' }} onClick={() => dispatch({ action: 'ToggleUpgradeWindow' })}>
             Upgrade
           </button>
         </div>

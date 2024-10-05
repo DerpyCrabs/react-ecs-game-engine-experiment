@@ -1,4 +1,3 @@
-import React from 'react'
 import { EntityIdComponent, LevelComponent } from '../components'
 import { Entity } from '../engine'
 import towerMap from '../maps/tower'
@@ -10,13 +9,8 @@ export default function UpgradeWindow({ entities, state, dispatch }: UIProps) {
   }
 
   const upgradableEntities = entities
-    .filter(
-      e =>
-        e.components.level &&
-        e.components.entityId &&
-        towerMap.upgrades[e.components.entityId.id]
-    )
-    .map(e => [e.components.entityId.id, e]) as [
+    .filter((e) => e.components.level && e.components.entityId && towerMap.upgrades[e.components.entityId.id])
+    .map((e) => [e.components.entityId.id, e]) as [
     string,
     Entity<{
       level: LevelComponent
@@ -25,14 +19,9 @@ export default function UpgradeWindow({ entities, state, dispatch }: UIProps) {
   ][]
 
   return (
-    <div
-      style={{ backgroundColor: 'lightcyan', overflowY: 'auto', width: '35%' }}
-    >
+    <div style={{ backgroundColor: 'lightcyan', overflowY: 'auto', width: '35%' }}>
       {upgradableEntities.map(([entityId, entity]) => (
-        <div
-          key={entityId}
-          style={{ display: 'flex', justifyContent: 'space-between' }}
-        >
+        <div key={entityId} style={{ display: 'flex', justifyContent: 'space-between' }}>
           <span>
             {entityId}: {entity.components.level.level}
           </span>
@@ -44,10 +33,7 @@ export default function UpgradeWindow({ entities, state, dispatch }: UIProps) {
               })
             }
           >
-            Upgrade for{' '}
-            {towerMap.upgrades[entityId].upgradeCost(
-              entity.components.level.level + 1
-            )}
+            Upgrade for {towerMap.upgrades[entityId].upgradeCost(entity.components.level.level + 1)}
           </button>
         </div>
       ))}

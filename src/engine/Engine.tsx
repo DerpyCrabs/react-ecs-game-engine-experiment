@@ -1,17 +1,11 @@
-import * as React from 'react'
 import useDimensions from 'react-cool-dimensions'
-import {
-  Entity,
-  System,
-  Event,
-  DebugComponentProps,
-  ReactAdditionalGlobals,
-} from './types'
+import { Entity, System, Event, DebugComponentProps, ReactAdditionalGlobals } from './types'
 import useInterval from './use-interval'
 import applySystems from './apply-systems'
 import Viewport from './Viewport'
 import FrameRateControls from './FrameRateControls'
 import DefaultDebugView from './DefaultDebugView'
+import { useRef, useState } from 'react'
 
 export default function GameEngine({
   entities,
@@ -34,21 +28,17 @@ export default function GameEngine({
   showFrameRateControls?: boolean
   DebugComponent?: (p: DebugComponentProps) => JSX.Element
 }) {
-  const [currentFrameRate, setCurrentFrameRate] = React.useState(frameRate)
-  const [currentData, setData] = React.useState({
+  const [currentFrameRate, setCurrentFrameRate] = useState(frameRate)
+  const [currentData, setData] = useState({
     entities,
     state: initialState,
     lastFrameTimestamp: new Date().getTime(),
   })
 
-  const [paused, setPaused] = React.useState(false)
-  const eventsRef = React.useRef([] as Event[])
+  const [paused, setPaused] = useState(false)
+  const eventsRef = useRef([] as Event[])
 
-  const {
-    observe: viewportRef,
-    height: currentViewportHeight,
-    width: currentViewportWidth,
-  } = useDimensions()
+  const { observe: viewportRef, height: currentViewportHeight, width: currentViewportWidth } = useDimensions()
 
   const step = () => {
     setData(
@@ -58,8 +48,7 @@ export default function GameEngine({
         input: eventsRef.current,
         state: currentData.state,
         lastFrameTimestamp: currentData.lastFrameTimestamp,
-        frameRate:
-          1000 / (new Date().getTime() - currentData.lastFrameTimestamp),
+        frameRate: 1000 / (new Date().getTime() - currentData.lastFrameTimestamp),
         allEntities: currentData.entities,
       })
     )
@@ -96,9 +85,9 @@ export default function GameEngine({
         <DebugComponent
           systems={systems}
           entities={currentData.entities}
-          setEntities={e => setData(d => ({ ...d, entities: e }))}
+          setEntities={(e) => setData((d) => ({ ...d, entities: e }))}
           state={currentData.state}
-          setState={s => setData(d => ({ ...d, state: s }))}
+          setState={(s) => setData((d) => ({ ...d, state: s }))}
         />
       </div>
     )

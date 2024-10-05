@@ -1,5 +1,4 @@
 import { EntityIdComponent, ExtractionOccupationComponent, StorageComponent } from '../components'
-import { Entity } from '../engine'
 import { create } from 'mutative'
 import { System } from '../types'
 

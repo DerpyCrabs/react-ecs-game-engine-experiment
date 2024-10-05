@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function FrameRateControls({
   paused,
   setPaused,
@@ -15,9 +13,7 @@ export default function FrameRateControls({
 }) {
   return (
     <div style={{ paddingBottom: 20 }}>
-      <button onClick={() => setPaused(!paused)}>
-        {paused ? 'Unpause' : 'Pause'}
-      </button>
+      <button onClick={() => setPaused(!paused)}>{paused ? 'Unpause' : 'Pause'}</button>
       <button onClick={() => step()}>Step</button>
       <span style={{ marginLeft: 20 }}>
         Framerate:{' '}
@@ -27,7 +23,7 @@ export default function FrameRateControls({
           value={currentFrameRate}
           min={5}
           max={60}
-          onChange={e => setCurrentFrameRate(Number(e.target.value))}
+          onChange={(e) => setCurrentFrameRate(Number(e.target.value))}
         />
         {currentFrameRate}
       </span>

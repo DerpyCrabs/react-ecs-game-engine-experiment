@@ -1,5 +1,4 @@
 import { CarryingOccupationComponent, PositionComponent } from '../components'
-import { Entity } from '../engine'
 import { create } from 'mutative'
 import towerMap from '../maps/tower'
 import { System } from '../types'

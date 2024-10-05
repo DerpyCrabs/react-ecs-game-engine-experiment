@@ -1,4 +1,3 @@
-import React from 'react'
 import DebugView from './DebugView'
 import GameEngine from './engine'
 import generateEntities from './entities/generateEntities'

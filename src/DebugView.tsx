@@ -1,4 +1,3 @@
-import React from 'react'
 import { Entity } from './engine'
 import { GlobalState } from './types'
 import './DebugView.css'
@@ -17,20 +16,10 @@ function getOccupationType(components: any): string {
 }
 
 function getCommonOccupationParams(components: any): OccupationComponent {
-  return (
-    components.extractionOccupation ||
-    components.producingOccupation ||
-    components.carryingOccupation
-  )
+  return components.extractionOccupation || components.producingOccupation || components.carryingOccupation
 }
 
-export default function DebugView({
-  state,
-  entities,
-}: {
-  state: GlobalState
-  entities: Entity<any>[]
-}) {
+export default function DebugView({ state, entities }: { state: GlobalState; entities: Entity<any>[] }) {
   return (
     <div>
       <table>
@@ -53,22 +42,12 @@ export default function DebugView({
               <td>{e.components.entityId?.id}</td>
               <td>{getOccupationType(e.components)}</td>
               <td>{e.components?.level?.level || 'N/A'}</td>
-              <td>
-                {getCommonOccupationParams(e.components).speed.toFixed(2)}
-              </td>
-              <td>
-                {e.components?.carryingOccupation
-                  ? e.components.carryingOccupation.capacity.toFixed(2)
-                  : 'N/A'}
-              </td>
-              <td>
-                {getCommonOccupationParams(e.components).progress.toFixed(2)}
-              </td>
+              <td>{getCommonOccupationParams(e.components).speed.toFixed(2)}</td>
+              <td>{e.components?.carryingOccupation ? e.components.carryingOccupation.capacity.toFixed(2) : 'N/A'}</td>
+              <td>{getCommonOccupationParams(e.components).progress.toFixed(2)}</td>
               <td>{e.components.storage?.items?.Ore || 0}</td>
               <td>{e.components.storage?.items?.Brick || 0}</td>
-              <td>
-                {e.components.entityId?.id === state.boostedEntity ? '+' : ''}
-              </td>
+              <td>{e.components.entityId?.id === state.boostedEntity ? '+' : ''}</td>
             </tr>
           ))}
         </tbody>

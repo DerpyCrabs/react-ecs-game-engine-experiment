@@ -1,9 +1,4 @@
-import React from 'react'
-import {
-  SizeComponent,
-  PositionComponent,
-  SpriteComponent,
-} from '../components'
+import { SizeComponent, PositionComponent, SpriteComponent } from '../components'
 import { System } from '../types'
 
 type RenderSystemQuery = {
@@ -33,20 +28,13 @@ function DrawEntity({
         zIndex: entity.sprite.zIndex || 0,
         pointerEvents: 'none',
         ...(entity.sprite.border ? { border: entity.sprite.border } : {}),
-        ...(entity.sprite.spriteUrl
-          ? { backgroundImage: entity.sprite.spriteUrl }
-          : {}),
+        ...(entity.sprite.spriteUrl ? { backgroundImage: entity.sprite.spriteUrl } : {}),
       }}
     ></div>
   )
 }
 
-const DrawEntityMemoized = React.memo(DrawEntity)
-
-export function RenderSystem(
-  width: number,
-  height: number
-): System<RenderSystemQuery> {
+export function RenderSystem(width: number, height: number): System<RenderSystemQuery> {
   return [
     'RenderSystem',
     ['position', 'sprite', 'size'],
@@ -55,7 +43,7 @@ export function RenderSystem(
         state: {
           ...state,
           components: entities.map((e, i) => (
-            <DrawEntityMemoized
+            <DrawEntity
               key={i}
               entity={e.components}
               xCoefficient={viewportWidth / width}

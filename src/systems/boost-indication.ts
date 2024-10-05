@@ -1,4 +1,3 @@
-import { Entity } from '../engine'
 import { EntityIdComponent, PositionComponent, SizeComponent, SpriteComponent } from '../components'
 import { create } from 'mutative'
 import { System } from '../types'
