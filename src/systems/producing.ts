@@ -1,10 +1,6 @@
-import {
-  EntityIdComponent,
-  ProducingOccupationComponent,
-  StorageComponent,
-} from '../components'
+import { EntityIdComponent, ProducingOccupationComponent, StorageComponent } from '../components'
 import { Entity } from '../engine'
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { System } from '../types'
 
 type ProducingSystemQuery = {
@@ -18,15 +14,13 @@ export function ProducingSystem(): System<ProducingSystemQuery> {
     'ProducingSystem',
     ['producingOccupation', 'storage', 'entityId'],
     (entities, { frameRate, state: { boostedEntity } }) => {
-      return produce(entities => {
-        entities.forEach((e: Entity<ProducingSystemQuery>) => {
+      return create(entities, (entities) => {
+        entities.forEach((e) => {
           const occupation = e.components.producingOccupation
           const items = e.components.storage.items
           const inputItemType = occupation.inputItemType
           const outputItemType = occupation.outputItemType
-          const occupationSpeed =
-            occupation.speed *
-            (boostedEntity === e.components.entityId.id ? 3 : 1)
+          const occupationSpeed = occupation.speed * (boostedEntity === e.components.entityId.id ? 3 : 1)
 
           if (occupation.progress === 0 && items[inputItemType] !== 0) {
             items[inputItemType] = (items[inputItemType] || 0) - 1
@@ -40,7 +34,7 @@ export function ProducingSystem(): System<ProducingSystemQuery> {
             }
           }
         })
-      })(entities)
+      })
     },
   ]
 }

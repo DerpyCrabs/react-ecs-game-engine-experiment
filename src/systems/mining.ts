@@ -1,10 +1,6 @@
-import {
-  EntityIdComponent,
-  ExtractionOccupationComponent,
-  StorageComponent,
-} from '../components'
+import { EntityIdComponent, ExtractionOccupationComponent, StorageComponent } from '../components'
 import { Entity } from '../engine'
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { System } from '../types'
 
 type MiningSystemQuery = {
@@ -18,14 +14,12 @@ export function MiningSystem(): System<MiningSystemQuery> {
     'MiningSystem',
     ['extractionOccupation', 'storage', 'entityId'],
     (entities, { frameRate, state: { boostedEntity } }) => {
-      return produce(entities => {
-        entities.forEach((e: Entity<MiningSystemQuery>) => {
+      return create(entities, (entities) => {
+        entities.forEach((e) => {
           const occupation = e.components.extractionOccupation
           const items = e.components.storage.items
           const itemType = occupation.itemType
-          const occupationSpeed =
-            occupation.speed *
-            (boostedEntity === e.components.entityId.id ? 3 : 1)
+          const occupationSpeed = occupation.speed * (boostedEntity === e.components.entityId.id ? 3 : 1)
 
           occupation.progress += occupationSpeed * (1 / frameRate)
 
@@ -35,7 +29,7 @@ export function MiningSystem(): System<MiningSystemQuery> {
             items[itemType] = (items[itemType] || 0) + 1
           }
         })
-      })(entities)
+      })
     },
   ]
 }
