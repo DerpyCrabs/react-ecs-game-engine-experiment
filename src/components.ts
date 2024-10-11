@@ -1,4 +1,4 @@
-export type ItemType = string
+export type ItemType = 'stone' | 'wood' | 'iron' | 'brick'
 
 export type EntityId = string
 
@@ -52,4 +52,10 @@ export interface SizeComponent {
 
 export interface LevelComponent {
   level: number
+}
+
+export interface BuildingComponent {
+  progress: number
+  remainingCost: { [item: string]: number }
+  totalCost: { [item: string]: number }
 }

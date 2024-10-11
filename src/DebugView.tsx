@@ -32,6 +32,7 @@ export default function DebugView({ state, entities }: { state: GlobalState; ent
             <th>Capacity</th>
             <th>Progress</th>
             <th>Ore</th>
+            <th>Wood</th>
             <th>Brick</th>
             <th>Boosted?</th>
           </tr>
@@ -42,10 +43,11 @@ export default function DebugView({ state, entities }: { state: GlobalState; ent
               <td>{e.components.entityId?.id}</td>
               <td>{getOccupationType(e.components)}</td>
               <td>{e.components?.level?.level || 'N/A'}</td>
-              <td>{getCommonOccupationParams(e.components).speed.toFixed(2)}</td>
+              <td>{getCommonOccupationParams(e.components)?.speed?.toFixed(2)}</td>
               <td>{e.components?.carryingOccupation ? e.components.carryingOccupation.capacity.toFixed(2) : 'N/A'}</td>
-              <td>{getCommonOccupationParams(e.components).progress.toFixed(2)}</td>
+              <td>{getCommonOccupationParams(e.components)?.progress?.toFixed(2)}</td>
               <td>{e.components.storage?.items?.Ore || 0}</td>
+              <td>{e.components.storage?.items?.Wood || 0}</td>
               <td>{e.components.storage?.items?.Brick || 0}</td>
               <td>{e.components.entityId?.id === state.boostedEntity ? '+' : ''}</td>
             </tr>
