@@ -10,13 +10,20 @@ function getOccupationType(components: any): string {
     return 'Production'
   } else if (components.carryingOccupation) {
     return 'Carrying'
+  } else if (components.building) {
+    return 'Building'
   } else {
     return 'Unknown'
   }
 }
 
 function getCommonOccupationParams(components: any): OccupationComponent {
-  return components.extractionOccupation || components.producingOccupation || components.carryingOccupation
+  return (
+    components.extractionOccupation ||
+    components.producingOccupation ||
+    components.carryingOccupation ||
+    components.building
+  )
 }
 
 export default function DebugView({ state, entities }: { state: GlobalState; entities: Entity<any>[] }) {

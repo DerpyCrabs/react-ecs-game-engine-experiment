@@ -3,6 +3,7 @@ import GameEngine from './engine'
 import generateEntities from './entities/generateEntities'
 import towerMap from './maps/tower'
 import { BoostIndicationSystem } from './systems/boost-indication'
+import { BuildingSystem } from './systems/building'
 import { CarryingSystem } from './systems/carrying'
 import { CarryingAnimationSystem } from './systems/carrying-animation'
 import { MiningSystem } from './systems/mining'
@@ -30,6 +31,7 @@ function App() {
           CarryingSystem(),
           CarryingAnimationSystem(),
           ProducingSystem(),
+          BuildingSystem(),
           MouseClickBoostSystem(400, 200),
           BoostIndicationSystem(),
           RenderSystem(400, 200),
