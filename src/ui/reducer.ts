@@ -84,16 +84,19 @@ function upgradeEntity(
     carryingOccupation?: CarryingOccupationComponent
     extractionOccupation?: ExtractionOccupationComponent
   }>,
-  upgrades: (typeof towerMap.upgrades)[string]
+  upgrades?: (typeof towerMap.upgrades)[string]
 ): void {
+  if (!upgrades) return
+
   const nextLevel = e.components.level.level + 1
   if (e.components?.carryingOccupation) {
-    e.components.carryingOccupation.speed = upgrades.speed(nextLevel)
-    e.components.carryingOccupation.capacity = upgrades.capacity?.(nextLevel) || 0
+    e.components.carryingOccupation.speed = upgrades.speed?.(nextLevel) ?? e.components.carryingOccupation.speed
+    e.components.carryingOccupation.capacity =
+      upgrades.capacity?.(nextLevel) ?? e.components.carryingOccupation.capacity
   } else if (e.components?.producingOccupation) {
-    e.components.producingOccupation.speed = upgrades.speed(nextLevel)
+    e.components.producingOccupation.speed = upgrades.speed?.(nextLevel) ?? e.components.producingOccupation.speed
   } else if (e.components?.extractionOccupation) {
-    e.components.extractionOccupation.speed = upgrades.speed(nextLevel)
+    e.components.extractionOccupation.speed = upgrades.speed?.(nextLevel) ?? e.components.extractionOccupation.speed
   }
   e.components.level.level = nextLevel
 }
